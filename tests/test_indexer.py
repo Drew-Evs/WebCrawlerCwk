@@ -6,7 +6,7 @@ from src.indexer import InvertedIndex
 #using temporary files to test the indexer functionality
 class TestIndexer(unittest.TestCase):
     #create an empty indexer for each test
-    def setup_indexer(self):
+    def setUp(self):
         self.indexer = InvertedIndex()
 
     #test quote to ensure that it is tokenised
@@ -43,7 +43,7 @@ class TestIndexer(unittest.TestCase):
 
     #use a temp filepath to test index sent to JSON correctly
     def test_save_and_load(self):
-        with tempfile.TemporaryDirectory as temp_dir:
+        with tempfile.TemporaryDirectory() as temp_dir:
             temp_filepath = os.path.join(temp_dir, "text_index.json")
 
             #add data then save and assert file created

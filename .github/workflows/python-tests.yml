@@ -15,25 +15,25 @@ jobs:
 
   #setup a branch
   steps:
-  - name: Checkout Repository
-    uses: actions/checkout@v3
+    - name: Checkout Repository
+      uses: actions/checkout@v3
 
-  - name: Setup Python 3.12
-    uses: actions/setup-python@v4
-    with:
-      python-version: "3.12"
+    - name: Setup Python 3.12
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.12"
 
-  #install the libraries
-  - name: Install Dependencies
-    run: | 
-      python -m pip install --upgrade pip
-      if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    #install the libraries
+    - name: Install Dependencies
+      run: | 
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-  #points to source files
-  - name: Add src to path
-    run: echo "PYTHONPATH=./src" >> $GITHUB_ENV
+    #points to source files
+    - name: Add src to path
+      run: echo "PYTHONPATH=./src" >> $GITHUB_ENV
 
-  #run all files in tests/ with test_
-  - name: Run unit tests
-    run: | 
-      python -m unittest discover -s tests -p "test_*.py"
+    #run all files in tests/ with test_
+    - name: Run unit tests
+      run: | 
+        python -m unittest discover -s tests -p "test_*.py"

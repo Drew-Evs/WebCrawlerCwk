@@ -25,7 +25,7 @@ class Searcher:
 
         #check for word in index and print the dictionary to CLI
         if target_word in self.indexer.index:
-            print(f"\n--- Index Data Found for '{target_word} ---")
+            print(f"\n--- Index Data Found for '{target_word}' ---")
             print(json.dumps(self.indexer.index[target_word], indent=4))
         else:
             print(f"\nWord '{target_word}' not found in index")
@@ -33,9 +33,10 @@ class Searcher:
     #find implementation - returning all URLs with all words in query phrase
     def find_phrase(self, phrase):
         #tokenise the words and check exists
-        query_words = self.indexer.tokenise(phrase)
+        query_words = self.indexer.tokenize(phrase)
         if not query_words:
             print(f"{phrase} is invalid. Try again")
+            return []
 
         #test first word if its not valid then failed query
         first_word = query_words[0]

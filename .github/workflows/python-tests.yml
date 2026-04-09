@@ -11,7 +11,7 @@ on:
 jobs:
   #initiate build
   build:
-    runs-onL ubuuntu-latest
+    runs-on ubuuntu-latest
 
   #setup a branch
   steps:

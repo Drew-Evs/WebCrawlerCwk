@@ -7,6 +7,8 @@ class TestCrawler(unittest.TestCase):
     #simulate the web requests and sleep
     @patch('src.crawler.requests.get')
     @patch('src.crawler.time.sleep')
+    #also simulate the save 
+    @patch('src.crawler.InvertedIndex.save')
     def test_crawler_success(self, mock_sleep, mock_get):
         #mock response setup 1st create fake html form site
         #1 with button next with no button
@@ -46,7 +48,7 @@ class TestCrawler(unittest.TestCase):
 
         #run test function with a fake url
         test_url = "http://fake-test-website.com"
-        result = build_crawler(test_url)
+        result_indexer = build_crawler(test_url)
 
         #assert requests.get was called and sleep with multiple pages
         expected_calls = [
@@ -58,6 +60,12 @@ class TestCrawler(unittest.TestCase):
         mock_get.assert_has_calls(expected_calls, any_order=False)
         self.assertEqual(mock_get.call_count, 2)
         self.assertEqual(mock_sleep.call_count, 2)
+
+        #check that the indexer results are correct
+        self.assertIn('einstein', result_indexer.index)
+        self.assertIn("http://fake-test-website.com", result_indexer.index['einstein'])
+        self.assertIn('rowling', result_indexer.index)
+        self.assertIn("http://fake-test-website.com/page/2/", result_indexer.index['rowling'])
 
 if __name__ == '__main__':
     unittest.main()

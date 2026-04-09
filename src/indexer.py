@@ -54,7 +54,7 @@ class InvertedIndex:
         print(f"Index saved to {filepath}")
 
     '''and load from the JSON file'''
-    def save(self, filepath="data/index.json"):
+    def load(self, filepath="data/index.json"):
         try:
             with open(filepath, 'r', encoding='utf-8') as f:
                 self.index = json.load(f)

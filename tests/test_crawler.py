@@ -9,7 +9,7 @@ class TestCrawler(unittest.TestCase):
     @patch('src.crawler.time.sleep')
     #also simulate the save 
     @patch('src.crawler.InvertedIndex.save')
-    def test_crawler_success(self, mock_sleep, mock_get):
+    def test_crawler_success(self, mock_sleep, mock_get, mock_save):
         #mock response setup 1st create fake html form site
         #1 with button next with no button
         mock_html_1 = """
@@ -60,6 +60,9 @@ class TestCrawler(unittest.TestCase):
         mock_get.assert_has_calls(expected_calls, any_order=False)
         self.assertEqual(mock_get.call_count, 2)
         self.assertEqual(mock_sleep.call_count, 2)
+
+        #check save was called
+        mock_save.assert_called_once()
 
         #check that the indexer results are correct
         self.assertIn('einstein', result_indexer.index)

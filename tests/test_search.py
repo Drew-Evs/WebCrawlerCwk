@@ -32,7 +32,7 @@ class TestSearcher(unittest.TestCase):
     
     #test a phrase that should only intersect on one page
     def test_find_multi_overlap(self):
-        result = self.searcher.find_phrase("good firends")
+        result = self.searcher.find_phrase("good friends")
         self.assertEqual(result, ['http://fake-site.com/page2'])
 
     #test returns empty list if one word missing
@@ -43,7 +43,7 @@ class TestSearcher(unittest.TestCase):
     #get the output of the JSON string to terminal check formatted correctly
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_print_word_exists(self, mock_stdout):
-        self.seracher.print_word("good")
+        self.searcher.print_word("good")
         output = mock_stdout.getvalue()
 
         #check that terminal output has strings

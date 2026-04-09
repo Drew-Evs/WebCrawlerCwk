@@ -11,12 +11,12 @@ on:
 jobs:
   #initiate build
   build:
-    runs-on ubuuntu-latest
+    runs-on: ubuntu-latest
 
   #setup a branch
   steps:
   - name: Checkout Repository
-    uses: actions/Checkout@v3
+    uses: actions/checkout@v3
 
   - name: Setup Python 3.12
     uses: actions/setup-python@v4
@@ -31,9 +31,9 @@ jobs:
 
   #points to source files
   - name: Add src to path
-    run: echo "PYTHONPATH-./src" >> $GITHUB_ENV
+    run: echo "PYTHONPATH=./src" >> $GITHUB_ENV
 
   #run all files in tests/ with test_
   - name: Run unit tests
     run: | 
-      ptrhon -m unittest discover -s test -p "test_*.py"
+      python -m unittest discover -s test -p "test_*.py"

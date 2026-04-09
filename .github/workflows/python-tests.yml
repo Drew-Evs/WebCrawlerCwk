@@ -1,0 +1,39 @@
+name: Python Unit Tests CI
+
+#trigger on push/pull requests to main branch
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+    branches: ["main", "master"]
+
+#order of operations
+jobs:
+  #initiate build
+  build:
+    runs-onL ubuuntu-latest
+
+  #setup a branch
+  steps:
+  - name: Checkout Repository
+    uses: actions/Checkout@v3
+
+  - name: Setup Python 3.12
+    uses: actions/setup-python@v4
+    with:
+      python-version: "3.12"
+
+  #install the libraries
+  - name: Install Dependencies
+    run: | 
+      python -m pip install --upgrade pip
+      if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+  #points to source files
+  - name: Add src to path
+    run: echo "PYTHONPATH-./src" >> $GITHUB_ENV
+
+  #run all files in tests/ with test_
+  - name: Run unit tests
+    run: | 
+      ptrhon -m unittest discover -s test -p "test_*.py"

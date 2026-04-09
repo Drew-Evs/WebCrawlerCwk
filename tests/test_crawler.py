@@ -9,7 +9,7 @@ class TestCrawler(unittest.TestCase):
     @patch('src.crawler.time.sleep')
     #also simulate the save 
     @patch('src.crawler.InvertedIndex.save')
-    def test_crawler_success(self, mock_sleep, mock_get, mock_save):
+    def test_crawler_success(self, mock_save, mock_sleep, mock_get):
         #mock response setup 1st create fake html form site
         #1 with button next with no button
         mock_html_1 = """

@@ -1,7 +1,7 @@
 import requests 
 from bs4 import BeautifulSoup
 import time
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
 from indexer import InvertedIndex
 
 '''
@@ -37,18 +37,30 @@ def build_crawler(base_url):
             page_text = soup.get_text(separator=' ', strip=True)
             indexer.add_document(current_url, page_text)
 
-            '''!!! ADJUST LATER TO FOCUS QUOTES/AUTHORS !!!'''
+            #want to crawl just the domain then find every <a> tag
+            base_domain = urlparse(base_url).netloc
+            all_links = soup.find_all('a')
 
-            #find buttons with next text to scrape url
-            '''!!! ADJUST LATER TO CHECK ALL BUTTONS !!!'''
-            next_button = soup.find('li', class_='next')
-            if next_button:
-                next_link = next_button.find('a')['href']
+            #go through all links with the href attribute
+            for link in all_links:
+                href = link.get('href')
+                if not href:
+                    continue
 
-                #add full url to queue
-                full_next_url = urljoin(base_url, next_link)
-                if full_next_url not in visited_urls:
-                    urls_to_visit.append(full_next_url)
+                #strip url fragments and ignore non web links e.g. email/javascript
+                href = href.split('#')[0]
+                if href.startswith('mailto:') or href.startswith('javascript:'):
+                    continue
+
+                #create full url and parse to ensure in same domain
+                full_url = urljoin(current_url, href)
+                link_domain = urlparse(full_url).netloc
+                if link_domain != base_domain:
+                    continue
+
+                #queue url if not added yet
+                if full_url not in visited_urls and full_url not in urls_to_visit:
+                    urls_to_visit.append(full_url)
 
         except requests.exceptions.RequestException as e:
             print(f'Error crawling {current_url}: {e}')
@@ -60,7 +72,7 @@ def build_crawler(base_url):
     print("Finished Crawling - Saving Now")
     indexer.save()
 
-    return "File Saved"
+    return indexer
 
 #initial execution
 if __name__ == "__main__":

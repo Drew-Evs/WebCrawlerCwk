@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import time
 from urllib.parse import urljoin
+from indexer import InvertedIndex
 
 '''
 @func a crawler to traverse the site visiting urls
@@ -14,8 +15,8 @@ def build_crawler(base_url):
     visited_urls = set()
     urls_to_visit = [base_url]
 
-    #the dictionary of scraped data
-    scraped_data = {}
+    #initialise the indexer
+    indexer = InvertedIndex()
 
     while urls_to_visit:
         #get next page and check if already visited
@@ -32,9 +33,14 @@ def build_crawler(base_url):
             soup = BeautifulSoup(response.text, 'html.parser')
             visited_urls.add(current_url)
 
-            #placeholder for text extraction
+            #then add each page to the indexer
+            page_text = soup.get_text(separator=' ', strip=True)
+            indexer.add_document(current_url, page_text)
+
+            '''!!! ADJUST LATER TO FOCUS QUOTES/AUTHORS !!!'''
 
             #find buttons with next text to scrape url
+            '''!!! ADJUST LATER TO CHECK ALL BUTTONS !!!'''
             next_button = soup.find('li', class_='next')
             if next_button:
                 next_link = next_button.find('a')['href']
@@ -50,7 +56,11 @@ def build_crawler(base_url):
         #politeness window of 6 seconds
         time.sleep(6)
 
-    return scraped_data
+    #save the index
+    print("Finished Crawling - Saving Now")
+    indexer.save()
+
+    return "File Saved"
 
 #initial execution
 if __name__ == "__main__":

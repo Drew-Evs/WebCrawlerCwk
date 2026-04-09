@@ -3,7 +3,6 @@ from unittest.mock import patch, MagicMock, call
 from src.crawler import build_crawler
 
 #using mocking to simulate website repsonse
-
 class TestCrawler(unittest.TestCase):
     #simulate the web requests and sleep
     @patch('src.crawler.requests.get')

@@ -52,6 +52,10 @@ def build_crawler(base_url):
                 if href.startswith('mailto:') or href.startswith('javascript:'):
                     continue
 
+                #avoid pages with tag to avoid recrawling the same quotes
+                if '/tag/' in href:
+                    continue
+
                 #create full url and parse to ensure in same domain
                 full_url = urljoin(current_url, href)
                 link_domain = urlparse(full_url).netloc

@@ -1,7 +1,12 @@
 import unittest
 import os
 import tempfile
+import sys
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 from src.indexer import InvertedIndex
+
+
 
 #using temporary files to test the indexer functionality
 class TestIndexer(unittest.TestCase):

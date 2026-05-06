@@ -67,3 +67,9 @@ python -m unittest discover -s tests -p "test_*.py"
 ```
 
 A successful run will show ```Ran 9 tests``
+
+---
+
+## Video Link
+
+For a complete walkthrough of the code, development process and testing follow: https://youtu.be/ku-bOccBkPM

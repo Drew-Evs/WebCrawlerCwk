@@ -55,13 +55,17 @@ def main():
             elif command == "print":
                 if not args:
                     print("Missing word to print e.g. print nonsense")
+                elif indexer.index == {}:
+                    print("Indexer missing - run 'build' or 'load' first")
                 else:
                     searcher.print_word(args)
 
             #need to test for phrase
             elif command == "find":
                 if not args:
-                    print("Missing phrase to search e.g. print good friends")
+                    print("Missing phrase to search e.g. find good friends")
+                elif indexer.index == {}:
+                    print("Indexer missing - run 'build' or 'load' first")
                 else:
                     searcher.find_phrase(args)
 

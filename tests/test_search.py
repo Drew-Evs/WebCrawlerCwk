@@ -1,8 +1,14 @@
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
+
 import unittest
 import io
 from unittest.mock import patch
 from src.indexer import InvertedIndex
 from src.search import Searcher
+
+# ... rest of your test code remains exactly the same ...
 
 #use a prepopulated index to test the search
 class TestSearcher(unittest.TestCase):

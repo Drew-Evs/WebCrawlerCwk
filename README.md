@@ -72,4 +72,4 @@ A successful run will show ```Ran 9 tests``
 
 ## Video Link
 
-For a complete walkthrough of the code, development process and testing follow: [Video Link](https://1drv.ms/v/c/94f787ba6fa41a39/IQB3aH7Z6JsfTaeA1P1-Qg8cATW5jFIcsYKuEmaYlvoDqps?e=A74bgz)
+For a complete walkthrough of the code, development process and testing follow: [Video Link](https://1drv.ms/v/c/94f787ba6fa41a39/IQB3aH7Z6JsfTaeA1P1-Qg8cATW5jFIcsYKuEmaYlvoDqps?e=A74bgz) Make sure to select 1080p
